@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17918219, g: 0.224362, b: 0.30611554, a: 1}
+  m_IndirectSpecularColor: {r: 0.18041077, g: 0.22586747, b: 0.3069961, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,8 +97,10 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: a816521b461bceb4faece77d34007a5a,
+    type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 7ad5c042d332b814d842b7717c817fda,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -243,14 +245,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 135327423}
-  m_LocalRotation: {x: 0.43927202, y: -0.23050682, z: 0.11770256, w: 0.8602633}
+  m_LocalRotation: {x: 0.41194564, y: -0.07663494, z: 0.1926515, w: 0.88730675}
   m_LocalPosition: {x: -60.2, y: 368.4, z: 104.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 54.1, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 49.515, y: 2.006, z: 25.425}
 --- !u!1 &168403221
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,8 +936,8 @@ MonoBehaviour:
   m_Camera: {fileID: 1346104665}
   m_OriginBaseGameObject: {fileID: 871290289}
   m_CameraFloorOffsetObject: {fileID: 22767209}
-  m_RequestedTrackingOriginMode: 2
-  m_CameraYOffset: 1.1176
+  m_RequestedTrackingOriginMode: 1
+  m_CameraYOffset: 1.82
 --- !u!4 &871290292
 Transform:
   m_ObjectHideFlags: 0
@@ -1882,7 +1884,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.01
-  far clip plane: 1000
+  far clip plane: 10000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -1940,13 +1942,13 @@ Terrain:
   m_Enabled: 1
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: bd4b27b63649b4e4284e34e70053909c, type: 2}
-  m_TreeDistance: 1000
-  m_TreeBillboardDistance: 200
+  m_TreeDistance: 1600
+  m_TreeBillboardDistance: 500
   m_TreeCrossFadeLength: 100
   m_TreeMaximumFullLODCount: 200
   m_DetailObjectDistance: 250
-  m_DetailObjectDensity: 0.75
-  m_HeightmapPixelError: 5
+  m_DetailObjectDensity: 0.6
+  m_HeightmapPixelError: 1
   m_SplatMapDistance: 2048
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 2
@@ -1956,11 +1958,11 @@ Terrain:
   m_StaticShadowCaster: 0
   m_ReflectionProbeUsage: 1
   m_MaterialTemplate: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
-  m_BakeLightProbesForTrees: 0
+  m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 1
   m_DeringLightProbesForTrees: 1
   m_ScaleInLightmap: 0.00625
-  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
+  m_LightmapParameters: {fileID: 15204, guid: 0000000000000000f000000000000000, type: 0}
   m_GroupingID: 0
   m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
