@@ -12,3 +12,6 @@ Fishing with a VR headset and motion controllers, cast virtual fishing rod, reel
 
 ## Requirements
 * Meta Quest 2 with controllers
+
+## User Stories
+[User Story 1](./docs/slides/User%20Story%201.pptx)
