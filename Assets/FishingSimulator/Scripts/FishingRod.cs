@@ -9,11 +9,11 @@ public class FishingRod : MonoBehaviour
     public Slider powerBar;
     public float hookSpeedMultiplier = 5f;
     public GameObject waterPlane;
+    public GameObject player_camera;
     public GameObject rodTip;
 
     private bool isCasting = false;
     private bool hookFlying = false;
-    private bool isFishing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -31,15 +31,10 @@ public class FishingRod : MonoBehaviour
             UnityEngine.XR.InputDevice device = leftHandDevices[0];
             // Debug.Log(string.Format("Device name '{0}' with role '{1}'", device.name, device.role.ToString()));
             bool triggerValue;
+            // cast fishing
             if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out triggerValue) && triggerValue)
             {
                 Debug.Log("Trigger button is pressed.");
-                if (isFishing)
-                {
-                    isFishing = false;
-                    EndFishing();
-                    return;
-                }
                 if (!isCasting)
                 {
                     isCasting = true;
@@ -59,16 +54,25 @@ public class FishingRod : MonoBehaviour
                     hook.GetComponent<Rigidbody>().velocity = Vector3.zero;
                     hookFlying = false;
                     // check if the hook is in the lake
-                    float distanceFromLakeCenter = Vector3.Distance(transform.position, waterPlane.transform.position);
-                    MeshRenderer waterMeshRenderer = waterPlane.GetComponent<MeshRenderer>();
-                    float lakeRadius = waterMeshRenderer.bounds.size.x / 2f;
-                    if (distanceFromLakeCenter > lakeRadius)
+                    if (!hookFlying)
                     {
-                        EndFishing();
-                        return;
+                        float distanceFromLakeCenter = Vector3.Distance(hook.transform.position, waterPlane.transform.position);
+                        MeshRenderer waterMeshRenderer = waterPlane.GetComponent<MeshRenderer>();
+                        float lakeRadius = waterMeshRenderer.bounds.size.x / 2f;
+                        if (distanceFromLakeCenter > lakeRadius)
+                        {
+                            EndFishing();
+                            return;
+                        }
                     }
-                    isFishing = true;
                 }
+            }
+            // end fishing
+            bool primaryButtonValue;
+            if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out primaryButtonValue) && primaryButtonValue)
+            {
+                Debug.Log("Primary button pressed");
+                EndFishing();
             }
         }
         else if (leftHandDevices.Count > 1)
@@ -98,10 +102,11 @@ public class FishingRod : MonoBehaviour
         // show fishing line
         FishingLine fishingLine = rodTip.GetComponent<FishingLine>();
         fishingLine.enabled = true;
+        rodTip.GetComponent<LineRenderer>().enabled = true;
 
         float hookSpeed = powerBar.value * hookSpeedMultiplier;
         // GameObject hook = Instantiate(hook, transform.position, Quaternion.identity);
-        hook.GetComponent<Rigidbody>().velocity = transform.forward * hookSpeed;
+        hook.GetComponent<Rigidbody>().velocity = player_camera.transform.forward * hookSpeed;
         hook.GetComponent<Rigidbody>().useGravity = true;
         hookFlying = true;
     }
@@ -109,9 +114,9 @@ public class FishingRod : MonoBehaviour
     // deactive fishing hook and fishing line
     void EndFishing()
     {
-        isFishing = false;
         hook.SetActive(false);
         FishingLine fishingLine = rodTip.GetComponent<FishingLine>();
         fishingLine.enabled = false;
+        rodTip.GetComponent<LineRenderer>().enabled = false;
     }
 }

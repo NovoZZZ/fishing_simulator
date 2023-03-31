@@ -6,7 +6,6 @@ public class FishGenerator : MonoBehaviour
 {
 
     public GameObject fishPrefab;
-    public float distanceThreshold = 5f;
     public int maxFishCount = 10;
     private int fishCount = 0;
 
@@ -14,7 +13,7 @@ public class FishGenerator : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating("ChangeFishDirection", 5f, 5f);
+        InvokeRepeating("ChangeFishDirection", 3f, 3f);
     }
 
 
@@ -23,11 +22,15 @@ public class FishGenerator : MonoBehaviour
     {
         GameObject player = GameObject.Find("Main Camera");
         float distance = Vector3.Distance(player.transform.position, transform.position);
-
-        if (distance < distanceThreshold && fishCount < maxFishCount)
+        MeshRenderer waterMeshRenderer = this.GetComponent<MeshRenderer>();
+        float lakeRadius = waterMeshRenderer.bounds.size.x / 2f;
+        if (distance < lakeRadius + 20f && fishCount < maxFishCount)
         {
-            Vector3 randomPos = new Vector3(Random.Range(-200f, 200f), -5f, Random.Range(-200f, 200f));
-            GameObject fish = Instantiate(fishPrefab, transform.position + randomPos, Quaternion.identity);
+            float generateRadius = lakeRadius - 80f;
+            Vector3 randomPos = new Vector3(transform.position.x + Random.Range(-generateRadius, generateRadius),
+                transform.position.y - 10f,
+                transform.position.z + Random.Range(-generateRadius, generateRadius));
+            GameObject fish = Instantiate(fishPrefab, randomPos, Quaternion.identity);
             fish.GetComponent<Rigidbody>().velocity = Random.insideUnitSphere.normalized * swimSpeed;
             fishCount++;
         }
@@ -35,10 +38,19 @@ public class FishGenerator : MonoBehaviour
 
     void ChangeFishDirection()
     {
+        MeshRenderer waterMeshRenderer = this.GetComponent<MeshRenderer>();
+        float lakeRadius = waterMeshRenderer.bounds.size.x / 2f;
         GameObject[] fishes = GameObject.FindGameObjectsWithTag("Fish");
         foreach (GameObject fish in fishes)
         {
-            Vector3 newDirection = new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-5f, 5f)).normalized;
+            float distance = Vector3.Distance(fish.transform.position, transform.position);
+            if (fish.transform.position.y  > transform.position.y - 5f || distance > lakeRadius)
+            {
+                fish.transform.position = new Vector3(transform.position.x + Random.Range(-100f, 100f),
+                    transform.position.y - 10f,
+                    transform.position.z + Random.Range(-100f, 100f));
+            }
+            Vector3 newDirection = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f)).normalized;
             fish.GetComponent<Rigidbody>().velocity = newDirection * swimSpeed;
         }
     }

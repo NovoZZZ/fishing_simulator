@@ -1034,8 +1034,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hook: {fileID: 1773507548}
   powerBar: {fileID: 195334605}
-  hookSpeedMultiplier: 15
+  hookSpeedMultiplier: 70
   waterPlane: {fileID: 1254191216}
+  player_camera: {fileID: 1346104661}
   rodTip: {fileID: 755105120}
 --- !u!1 &477794096
 GameObject:
@@ -2328,7 +2329,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishPrefab: {fileID: 159700, guid: 4111a63ec6a85c744a305e1dfd0869f9, type: 3}
-  distanceThreshold: 320
   maxFishCount: 100
   swimSpeed: 2
 --- !u!1 &1346104661
@@ -2729,6 +2729,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1773507549}
   - component: {fileID: 1773507551}
+  - component: {fileID: 1773507552}
+  - component: {fileID: 1773507553}
   m_Layer: 0
   m_Name: Hook
   m_TagString: Untagged
@@ -2768,6 +2770,32 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!135 &1773507552
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773507548}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1773507553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773507548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11c8c067c597eca4ebda2f3e842bf527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attachedFish: {fileID: 0}
 --- !u!1 &1793281887
 GameObject:
   m_ObjectHideFlags: 0
