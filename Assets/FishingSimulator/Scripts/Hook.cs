@@ -22,7 +22,7 @@ public class Hook : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Check if the colliding object is a fish
-        if (other.gameObject.CompareTag("Fish"))
+        if (attachedFish == null && other.gameObject.CompareTag("Fish"))
         {
             Debug.Log("Fish got hooked!");
             // Attach the fish to the hook
@@ -30,6 +30,7 @@ public class Hook : MonoBehaviour
             attachedFish.transform.position = this.transform.position;
             //attachedFish.transform.localPosition = Vector3.zero;
             attachedFish.GetComponent<Rigidbody>().isKinematic = true;
+            attachedFish.tag = "Untagged";
         }
     }
 }
