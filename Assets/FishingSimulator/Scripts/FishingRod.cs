@@ -200,7 +200,10 @@ public class FishingRod : MonoBehaviour
                         caughtFish.transform.LookAt(rodTip.transform.position);
                         caughtFish.transform.Translate(windUpDirection * windUpSpeed * Time.deltaTime, Space.World);
                         hook.transform.position = caughtFish.transform.position;
-                        battleBar.value += battleBarIncreaseSpeed * Time.deltaTime;
+                        if (battleBar.value < 1)
+                        {
+                            battleBar.value += battleBarIncreaseSpeed * Time.deltaTime;
+                        }
                     }
                 } else
                 {
