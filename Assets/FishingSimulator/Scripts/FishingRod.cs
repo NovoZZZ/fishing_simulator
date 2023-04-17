@@ -22,6 +22,7 @@ public class FishingRod : MonoBehaviour
     public GameObject rodTip;
     public TextMeshProUGUI TMPDistance;
     public TextMeshProUGUI TMPMessage;
+    public Image Tutorial;
 
     public Scrollbar battleBar;
     public GameObject targetBar;
@@ -207,6 +208,18 @@ public class FishingRod : MonoBehaviour
                     {
                         battleBar.value -= battleBarDecreaseSpeed * Time.deltaTime;
                     }
+                }
+            }
+            // tutorial
+            bool primaryButtonValue;
+            if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out primaryButtonValue) && primaryButtonValue)
+            {
+                Tutorial.gameObject.SetActive(true);
+            } else
+            {
+                if (Tutorial.gameObject.activeSelf)
+                {
+                    Tutorial.gameObject.SetActive(false);
                 }
             }
         }
