@@ -37,11 +37,23 @@ public class FishingRod : MonoBehaviour
     float battleBarCenterOffset;
     private float battleBarTimer;
 
+    private PlayerData playerData;
+    public GameObject playerDataObj;
+
+    public GameObject levelCanvas;
+    public GameObject audioObj;
+
+    public GameObject alertCanvas;
+
+
     // Start is called before the first frame update
     void Start()
     {
         battleBarLastUpdateTime = battleBarUpdateInterval;
         battleBarTimer = 0f;
+        playerData = playerDataObj.GetComponent<PlayerData>();
+        playerData.LoadData();
+        UpdateLevelInfo();
     }
 
     // Update is called once per frame
@@ -96,17 +108,45 @@ public class FishingRod : MonoBehaviour
                 {
                     Debug.Log(minValue + " " + maxValue + " -- " + battleBarTimer);
                     battleBarTimer += Time.deltaTime;
+                    alertCanvas.gameObject.SetActive(true);
+                } else
+                {
+                    alertCanvas.gameObject.SetActive(false);
                 }
             }
             // --- battle bar ---
             if (fishDistance < 20f)
             {
                 Debug.Log("Success!");
-                ShowMessage("Success!", new Color(50, 205, 50), messageDisplayDuration);
+                String message = "Success!";
+                int previousLevel = playerData.level;
                 caughtFish.SetActive(false);
                 hook.GetComponent<Hook>().attachedFish = null;
                 caughtFish = null;
                 EndFishing();
+                // Add 10 experience points to the player
+                playerData.AddExperience(10);
+                UpdateLevelInfo();
+                int currentLevel = playerData.level;
+                if (currentLevel > previousLevel)
+                {
+                    message += "\nLevel Up!";
+                } else
+                {
+                    message += "\n+10 Exp";
+                }
+                ShowMessage(message, new Color(50, 205, 50), messageDisplayDuration);
+
+                Transform catchFishObjTransform = audioObj.transform.Find("CatchFish");
+                if (catchFishObjTransform != null)
+                {
+                    // Get the AudioSource component on the SuccessObj
+                    AudioSource successAudio = catchFishObjTransform.GetComponent<AudioSource>();
+
+                    // Play the audio clip
+                    successAudio.Play();
+                }
+
             }
             else if (fishDistance > initialFishDistance + 200f || battleBarTimer > battleBarTimeThreshold)
             {
@@ -301,5 +341,23 @@ public class FishingRod : MonoBehaviour
         yield return new WaitForSeconds(duration);
         // Hide the text
         TMPMessage.gameObject.SetActive(false);
+    }
+
+    public void UpdateLevelInfo()
+    {
+        Debug.Log("Update level info");
+        TextMeshProUGUI levelInfo = levelCanvas.GetComponentInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI expInfo = levelCanvas.GetComponentsInChildren<TextMeshProUGUI>()[1];;
+        Slider expSlider = levelCanvas.GetComponentInChildren<Slider>();
+        float maxExp = 100 + (playerData.level - 1) * 10;
+        levelInfo.text = "LEVEL " + playerData.level;
+        expInfo.text = playerData.experience + "/" + maxExp;
+        expSlider.value = (float)playerData.experience / maxExp;
+    }
+
+    void OnApplicationQuit()
+    {
+        // Save the player's data to local storage
+        playerData.SaveData();
     }
 }
