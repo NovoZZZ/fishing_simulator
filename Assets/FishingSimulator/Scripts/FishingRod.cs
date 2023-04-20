@@ -317,6 +317,7 @@ public class FishingRod : MonoBehaviour
         battleBar.gameObject.SetActive(false);
         battleBarTimer = 0;
         battleBarLastUpdateTime = battleBarUpdateInterval;
+        alertCanvas.gameObject.SetActive(false);
     }
 
     void ShowDistance()
