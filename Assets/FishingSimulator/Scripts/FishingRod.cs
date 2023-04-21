@@ -232,6 +232,7 @@ public class FishingRod : MonoBehaviour
                     Debug.Log("Trigger button is pressed.");
                     if (caughtFish != null)
                     {
+                        windUpSpeed = playerData.level * 3f;
                         Vector3 windUpDirection = (rodTip.transform.position - caughtFish.transform.position).normalized;
                         if (caughtFish.transform.position.y > waterPlane.transform.position.y - 5f)
                         {
