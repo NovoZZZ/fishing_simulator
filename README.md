@@ -23,6 +23,15 @@ Fishing with a VR headset and motion controllers, cast virtual fishing rod, reel
 ## Requirements
 * Meta Quest 2 with controllers
 
+## Screenshots
+<img src="./docs/forest_scene.png">
+<img src="./docs/lake_view.png">
+<img src="./docs/lakes.png">
+<img src="./docs/fish.png">
+<img src="./docs/tutorial.png">
+<img src="./docs/battle_sys.png">
+
+
 ## Demo
 [Game Play Demo](https://youtu.be/HCX5Hq4XnF0)
 
